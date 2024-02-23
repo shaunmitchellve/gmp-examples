@@ -1,0 +1,50 @@
+[
+  {
+    "POI": "Walt Disney World",
+    "Location": "Orlando, Florida"
+  },
+  {
+    "POI": "Universal Orlando Resort",
+    "Location": "Orlando, Florida"
+  },
+  {
+    "POI": "SeaWorld Orlando",
+    "Location": "Orlando, Florida"
+  },
+  {
+    "POI": "Legoland Florida",
+    "Location": "Orlando, Florida"
+  },
+  {
+    "POI": "Busch Gardens Tampa Bay",
+    "Location": "Tampa, Florida"
+  },
+  {
+    "POI": "SeaWorld San Diego",
+    "Location": "San Diego, California"
+  },
+  {
+    "POI": "San Diego Zoo",
+    "Location": "San Diego, California"
+  },
+  {
+    "POI": "Universal Studios Hollywood",
+    "Location": "Los Angeles, California"
+  },
+  {
+    "POI": "Disney California Adventure Park",
+    "Location": "Anaheim, California"
+  },
+  {
+    "POI": "Knott's Berry Farm",
+    "Location": "Buena Park, California"
+  },
+  {
+    "POI": "Arizona Science Center",
+    "Location": "Phoenix, Arizona"
+  },
+  {
+    "POI": "Desert Botanical Garden",
+    "Location": "Phoenix, Arizona"
+  }
+]
