@@ -17,16 +17,16 @@ import (
 )
 
 func init() {
-	functions.HTTP("computeRouteMatrix", routeMatrix)
+	functions.HTTP("computeRouteMatrixJSON", routeMatrixJSON)
 }
 
-func routeMatrix(w http.ResponseWriter, r *http.Request) {
+func routeMatrixJSON(w http.ResponseWriter, r *http.Request) {
 	wait := new(sync.WaitGroup)
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
 	bqReq := &bqRequest{}
-	bqResp := &bqResponse{}
+	bqResp := &bqResponseJSON{}
 
 	if err := json.NewDecoder(r.Body).Decode(&bqReq); err != nil {
 		bqResp.ErrorMessage = fmt.Sprintf("External Function error: can't read POST body %v", err)
@@ -37,7 +37,7 @@ func routeMatrix(w http.ResponseWriter, r *http.Request) {
 		fmt.Printf("userDefinedContext %v\n", bqReq.UserDefinedContext)
 		fmt.Printf("calls %s\n", bqReq.Calls)
 
-		objs := make([]int64, len(bqReq.Calls))
+		objs := make([]route, len(bqReq.Calls))
 		// Calls should be 1, not being batched
 		// Each call should have 4 numbers: [origin_LAT, origin_LNG, DEST_LAT, DEST_LNG]
 		for i, r := range bqReq.Calls {
@@ -63,7 +63,7 @@ func routeMatrix(w http.ResponseWriter, r *http.Request) {
 			}
 
 			if bqResp.ErrorMessage != "" {
-				bqResp.Replies = []int64{0}
+				bqResp.Replies = nil
 				break
 			}
 
@@ -126,10 +126,9 @@ func routeMatrix(w http.ResponseWriter, r *http.Request) {
 								} else if rtMatrix.Condition != *routespb.RouteMatrixElementCondition_ROUTE_EXISTS.Enum() {
 									bqResp.ErrorMessage = "Route does not exist"
 								} else {
-									if bqReq.UserDefinedContext["mode"] == "duration"{
-										objs[j] = rtMatrix.Duration.Seconds
-									} else if bqReq.UserDefinedContext["mode"] == "distance" {
-										objs[j] = int64(rtMatrix.DistanceMeters)
+									objs[j] = route{
+										Distance: int64(rtMatrix.DistanceMeters),
+										Duration: rtMatrix.Duration.Seconds,
 									}
 
 									return
@@ -143,7 +142,7 @@ func routeMatrix(w http.ResponseWriter, r *http.Request) {
 
 		wait.Wait()
 		if bqResp.ErrorMessage != "" {
-			bqResp.Replies = []int64{0}
+			bqResp.Replies = nil
 		} else {
 			bqResp.Replies = objs
 		}
