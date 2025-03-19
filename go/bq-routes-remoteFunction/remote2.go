@@ -38,7 +38,6 @@ func routeMatrixJSON(w http.ResponseWriter, r *http.Request) {
 		fmt.Printf("calls %s\n", bqReq.Calls)
 
 		objs := make([]route, len(bqReq.Calls))
-		// Calls should be 1, not being batched
 		// Each call should have 4 numbers: [origin_LAT, origin_LNG, DEST_LAT, DEST_LNG]
 		for i, r := range bqReq.Calls {
 			if len(r) != 4 {
