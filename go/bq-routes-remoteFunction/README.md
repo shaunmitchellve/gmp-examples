@@ -17,6 +17,11 @@ The JSON response is pretty self explanatory, the Cloud Run Function will return
 
 The metadata response utilizes the userDefinedContext parameter in the POST call to return a single value, either distance or duration. "userDefinedContext": {"mode": "distance"}
 
+# Disclaimer
+
+In accordance with the [Google Maps Platform Terms of Service](https://cloud.google.com/maps-platform/terms/maps-service-terms?hl=en) you can **NOT** save the returned data of this remote function into any
+table. You can only view this data.
+
 **Contributors**
 
 - [jbranigan](https://github.com/jbranigan)
